@@ -4,7 +4,7 @@
       <div class="q-mb-xl">
         <q-input v-model="tempData.name" label="姓名" />
         <q-input v-model="tempData.age" label="年齡" />
-        <q-btn color="primary" class="q-mt-md">新增</q-btn>
+        <q-btn color="primary" class="q-mt-md" @click="addData()">新增</q-btn>
       </div>
 
       <q-table
@@ -123,8 +123,12 @@ const tempData = ref({
   name: '',
   age: '',
 });
-function handleClickOption(btn, data) {
-  // ...
+// function handleClickOption(btn, data) {
+//   // ...
+// }
+function addData() {
+  blockData.value.push({name:tempData.value.name,age:Number(tempData.value.age)})
+  tempData.value = { name: '', age: '' }; // 重置輸入欄位
 }
 </script>
 
