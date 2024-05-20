@@ -36,8 +36,12 @@
               style="min-width: 120px"
             >
               <div>{{ col.value }}</div>
+              <!-- <div v-if="editRow !== props.row.name">
+                {{ props.row[col.field] }}
+              </div>
+              <q-input v-else v-model="editBuffer[col.field]" dense filled /> -->
             </q-td>
-            <q-td class="text-right" auto-width v-if="tableButtons.length > 0">
+             <q-td class="text-right" auto-width v-if="tableButtons.length > 0">
               <q-btn
                 @click="handleClickOption(btn, props.row)"
                 v-for="(btn, index) in tableButtons"
@@ -86,7 +90,11 @@ interface btnType {
   icon: string;
   status: string;
 }
-const blockData = ref([
+interface DataType {
+  name: string;
+  age: number;
+}
+let blockData = ref([
   {
     name: 'test',
     age: 25,
@@ -123,12 +131,28 @@ const tempData = ref({
   name: '',
   age: '',
 });
-// function handleClickOption(btn, data) {
-//   // ...
-// }
+
+const editRow = ref<string | null>(null);
+const editBuffer = ref<DataType | null>(null);
+
+function handleClickOption(btn, data) {
+   if(btn.status === 'delete'){
+       blockData.value = blockData.value.filter((item: { name: string; })=>item.name !== data.name)
+  //  } else {
+  //   console.log(editRow.value)
+  //   if (editRow.value === data.name) {
+  //     const index = blockData.value.findIndex((el: { name: string; }) => el.name === data.name);
+  //     if (index !== -1) {
+  //       blockData.value[index] = {name:tempData.value.name,age:Number(tempData.value.age)};
+  //     }
+  //     editRow.value
+  //  }
+
+   }
+}
 function addData() {
   blockData.value.push({name:tempData.value.name,age:Number(tempData.value.age)})
-  tempData.value = { name: '', age: '' }; // 重置輸入欄位
+  tempData.value = { name: '', age: '' };
 }
 </script>
 
